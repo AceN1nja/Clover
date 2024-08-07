@@ -1,54 +1,64 @@
-import DeployButton from "../components/DeployButton";
-import AuthButton from "../components/AuthButton";
-import { createClient } from "@/utils/supabase/server";
-import ConnectSupabaseSteps from "@/components/tutorial/ConnectSupabaseSteps";
-import SignUpUserSteps from "@/components/tutorial/SignUpUserSteps";
-import Header from "@/components/Header";
+"use client";
+import Link from "next/link";
+import { Vortex } from "@/components/ui/vortex";
+import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 
-export default async function Index() {
-  const canInitSupabaseClient = () => {
-    // This function is just for the interactive tutorial.
-    // Feel free to remove it once you have Supabase connected.
-    try {
-      createClient();
-      return true;
-    } catch (e) {
-      return false;
-    }
-  };
+const words = [
+  {
+    text: "Job",
+    className: "text-white",
+  },
+  {
+    text: "applications",
+    className: "text-white",
+  },
+  {
+    text: "shouldn't",
+    className: "text-white",
+  },
+  {
+    text: "be",
+    className: "text-white",
+  },
+  {
+    text: "a",
+    className: "text-white",
+  },
+  {
+    text: "chore.",
+    className: "text-white",
+  },
+];
 
-  const isSupabaseConnected = canInitSupabaseClient();
-
+export default function Index() {
   return (
-    <div className="flex-1 w-full flex flex-col gap-20 items-center">
-      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-        <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-          <DeployButton />
-          {isSupabaseConnected && <AuthButton />}
-        </div>
-      </nav>
+    <main className="flex flex-col items-center justify-center min-h-screen bg-background py-12 md:py-24 lg:py-32">
+      <Vortex
+        rangeY={800}
+        particleCount={500}
+        baseHue={700}
+        backgroundColor="black"
+        className="flex items-center flex-col justify-center px-2 md:px-10 py-4 w-full h-full"
+      >
+        <section className="w-full max-w-5xl px-4 md:px-6">
+          <div className="flex text-center text-white flex-col justify-center space-y-2">
+            <TypewriterEffectSmooth words={words} />
 
-      <div className="flex-1 flex flex-col gap-20 max-w-4xl px-3">
-        <Header />
-        <main className="flex-1 flex flex-col gap-6">
-          <h2 className="font-bold text-4xl mb-4">Next steps</h2>
-          {isSupabaseConnected ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
-        </main>
-      </div>
-
-      <footer className="w-full border-t border-t-foreground/10 p-8 flex justify-center text-center text-xs">
-        <p>
-          Powered by{" "}
-          <a
-            href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-            target="_blank"
-            className="font-bold hover:underline"
-            rel="noreferrer"
-          >
-            Supabase
-          </a>
-        </p>
-      </footer>
-    </div>
+            <div className="flex flex-col gap-2 min-[400px]:flex-row justify-center">
+              <Link
+                href="/dashboard"
+                prefetch={false}
+                className="relative inline-flex h-fit overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+              >
+                <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+                <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-6 py-3 text-3xl font-medium text-white backdrop-blur-3xl">
+                  Let's get a job!
+                </span>
+              </Link>
+            </div>
+          </div>
+        </section>
+      </Vortex>
+    </main>
   );
 }
